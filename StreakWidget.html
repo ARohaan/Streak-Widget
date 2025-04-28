@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Streak Counter</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Mobile optimization -->
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background: #111; /* Black background */
+      font-family: Arial, sans-serif;
+    }
+    .widget {
+      background: #111;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+    .title {
+      font-size: 24px;
+      margin-bottom: 20px;
+      font-weight: bold;
+      letter-spacing: 2px;
+    }
+    .counter {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    button {
+      background: #333;
+      border: none;
+      color: white;
+      font-size: 20px;
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background: #555;
+    }
+    #count {
+      font-size: 24px;
+      width: 40px;
+      text-align: center;
+    }
+    #fire {
+      font-size: 30px;
+      transition: transform 0.3s;
+      display: inline-block;
+    }
+    #fire.grow {
+      transform: scale(1.5);
+    }
+    .reset {
+      font-size: 14px;
+      color: #ccc;
+      cursor: pointer;
+      margin-top: 5px;
+      display: inline-block;
+    }
+    .reset:hover {
+      color: white;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="widget">
+    <div class="title">STREAK</div>
+    <div class="counter">
+      <button onclick="decreaseStreak()">−</button>
+      <div id="fire">🔥</div>
+      <div id="count">0</div>
+      <button onclick="addStreak()">+</button>
+    </div>
+    <div class="reset" onclick="resetStreak()">reset</div>
+  </div>
+
+  <script>
+    // Initialize streak
+    let streak = parseInt(localStorage.getItem('streak')) || 0;
+    document.getElementById('count').textContent = streak;
+
+    function addStreak() {
+      streak += 1;
+      updateStreak();
+      animateFire();
+    }
+
+    function decreaseStreak() {
+      streak = Math.max(0, streak - 1);
+      updateStreak();
+    }
+
+    function resetStreak() {
+      streak = 0;
+      updateStreak();
+    }
+
+    function updateStreak() {
+      document.getElementById('count').textContent = streak;
+      localStorage.setItem('streak', streak);
+    }
+
+    function animateFire() {
+      const fire = document.getElementById('fire');
+      fire.classList.add('grow');
+      setTimeout(() => {
+        fire.classList.remove('grow');
+      }, 300);
+    }
+  </script>
+</body>
+</html>
